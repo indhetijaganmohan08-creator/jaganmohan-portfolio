@@ -33,38 +33,25 @@ import {
 
 export default function App() {
 
-  const pathname =
-    window.location.pathname;
+  const basePath = import.meta.env.BASE_URL;
 
+const pathname = window.location.pathname.startsWith(basePath)
+  ? window.location.pathname.slice(basePath.length - 1)
+  : window.location.pathname;
 
-  if (
-    pathname.startsWith("/project/")
-  ) {
+if (pathname.startsWith("/project/")) {
+  const id = pathname
+    .split("/")
+    .filter(Boolean)[1];
 
-    const id =
-      pathname
-        .split("/")
-        .filter(Boolean)[1];
+  const project = projects.find(
+    (item) => item.id === id
+  );
 
-
-    const project =
-      projects.find(
-        (item) =>
-          item.id === id
-      );
-
-
-    if (project) {
-
-      return (
-        <ProjectDetail
-          project={project}
-        />
-      );
-
-    }
+  if (project) {
+    return <ProjectDetail project={project} />;
   }
-
+}
 
   return (
 
@@ -234,7 +221,7 @@ export default function App() {
                 <div className="profile-image">
 
                   <img
-                    src="/profile.jpg"
+                    src={`${import.meta.env.BASE_URL}profile.jpg`}
                     alt="Jagan Mohan Indheti"
                   />
 

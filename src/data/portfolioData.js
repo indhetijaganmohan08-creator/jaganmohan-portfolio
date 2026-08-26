@@ -1,3 +1,4 @@
+const BASE_URL = import.meta.env.BASE_URL;
 export const profile = {
   name: "Jagan Mohan Indheti",
 
@@ -116,25 +117,29 @@ export const projects = [
     type: "Computer Vision",
 
     description:
-      "A computer-vision attendance system using face recognition and eye-blink verification to identify users and automate attendance recording.",
+      "An AI-powered attendance system that verifies a person by comparing facial feature vectors from a registered database with the live camera face. A two-blink liveness verification step is performed before attendance is confirmed, helping protect against simple photo-based spoofing.",
 
     technologies: [
       "Python",
       "OpenCV",
-      "Face Recognition",
+      "FaceNet",
       "Computer Vision",
+      "NumPy",
     ],
 
     images: [
-      "/projects/face-attendance/main.jpg",
-      "/projects/face-attendance/recognition.jpg",
-      "/projects/face-attendance/attendance.jpg",
+     `${BASE_URL}projects/face-attendance/hero.jpg`,
+     `${BASE_URL}projects/face-attendance/recognition.jpg`,
+     `${BASE_URL}projects/face-attendance/blink-detection.jpg`,
+     `${BASE_URL}projects/face-attendance/attendance-marked.jpg`,
     ],
 
     features: [
       "Real-time face detection",
-      "Face recognition",
-      "Eye-blink verification",
+      "Facial feature vector extraction",
+      "Database-based vector matching",
+      "Live camera face verification",
+      "Two-blink liveness verification",
       "Anti-spoofing verification",
       "Automatic attendance marking",
       "Attendance record management",
@@ -163,9 +168,9 @@ export const projects = [
     ],
 
     images: [
-      "/projects/hot-topic-trends/main.jpg",
-      "/projects/hot-topic-trends/trends.jpg",
-      "/projects/hot-topic-trends/analytics.jpg",
+      `${BASE_URL}projects/hot-topic-trends-1.jpg`,
+      `${BASE_URL}projects/hot-topic-trends-2.jpg`,
+      `${BASE_URL}projects/hot-topic-trends-showcase.jpg`,
     ],
 
     features: [
@@ -200,9 +205,9 @@ export const projects = [
     ],
 
     images: [
-      "/projects/medbuddy/main.jpg",
-      "/projects/medbuddy/booking.jpg",
-      "/projects/medbuddy/tracking.jpg",
+      `${BASE_URL}projects/medbuddy-1.jpg`,
+      `${BASE_URL}projects/medbuddy-2.jpg`,
+      `${BASE_URL}projects/medbuddy-showcase.jpg`,
     ],
 
     features: [
@@ -262,12 +267,14 @@ export const services = [
 
 
 export const education = {
-  degree: "Bachelor of Technology (B.Tech) computer science and engineering",
+  degree:
+    "Bachelor of Technology (B.Tech) Computer Science and Engineering",
 
-  field: "Artificial Intelligence and Data Science",
+  field:
+    "Artificial Intelligence and Data Science",
 
   institution:
-    "Eluru College of Engineering and Technology,JNTUK University, India",
+    "Eluru College of Engineering and Technology, JNTUK University, India",
 
   period: "2021-2025",
 };

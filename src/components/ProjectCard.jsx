@@ -81,7 +81,7 @@ export default function ProjectCard({
 
 
       <a
-        href={`/project/${project.id}`}
+        href={`${import.meta.env.BASE_URL}project/${project.id}/`}
         target="_blank"
         rel="noopener noreferrer"
 

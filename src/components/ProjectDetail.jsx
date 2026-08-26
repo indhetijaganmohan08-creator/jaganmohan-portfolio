@@ -21,7 +21,7 @@ export default function ProjectDetail({
       <header className="navbar">
 
         <a
-          href="/"
+          href={import.meta.env.BASE_URL}
           className="brand"
         >
 
@@ -61,7 +61,7 @@ export default function ProjectDetail({
           >
 
             <a
-              href="/#projects"
+              href={`${import.meta.env.BASE_URL}#projects`}
               className="back-link"
             >
 
@@ -120,7 +120,7 @@ export default function ProjectDetail({
 
 
               <a
-                href="/#projects"
+                href={`${import.meta.env.BASE_URL}#projects`}
                 className="button secondary"
               >
 
@@ -311,7 +311,7 @@ export default function ProjectDetail({
 
 
           <a
-            href="/#projects"
+            href={`${import.meta.env.BASE_URL}#projects`}
             className="button primary"
           >
 
