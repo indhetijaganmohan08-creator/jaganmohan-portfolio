@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -12,6 +13,13 @@ import { profile } from "../data/portfolioData";
 
 export default function ProjectDetail({ project }) {
 
+    useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [project.id]);
   /*
    * ============================================================
    * GO BACK TO PREVIOUS PORTFOLIO POSITION
