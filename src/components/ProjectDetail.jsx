@@ -10,19 +10,66 @@ import { motion } from "framer-motion";
 import { profile } from "../data/portfolioData";
 
 
-export default function ProjectDetail({
-  project,
-}) {
+export default function ProjectDetail({ project }) {
+
+  /*
+   * ============================================================
+   * GO BACK TO PREVIOUS PORTFOLIO POSITION
+   * ============================================================
+   *
+   * ProjectCard stores the user's scroll position before opening
+   * the project.
+   *
+   * Using browser history here takes the user back to the
+   * portfolio instead of loading the homepage from the top.
+   */
+  const goBackToPortfolio = (event) => {
+    event.preventDefault();
+
+    /*
+     * If there is browser history available, go back.
+     */
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    /*
+     * Fallback for cases where the project page was opened
+     * directly.
+     */
+    window.location.href = import.meta.env.BASE_URL;
+  };
+
+
+  /*
+   * ============================================================
+   * PROJECT IMAGE FALLBACK
+   * ============================================================
+   *
+   * Prevents the page from breaking visually if a project
+   * happens to have no images.
+   */
+  const images = Array.isArray(project?.images)
+    ? project.images
+    : [];
+
 
   return (
 
     <div className="project-detail-page">
+
+      {/* ======================================================
+          NAVBAR
+          ====================================================== */}
 
       <header className="navbar">
 
         <a
           href={import.meta.env.BASE_URL}
           className="brand"
+          aria-label="Return to portfolio homepage"
+          onClick={goBackToPortfolio}
         >
 
           <span className="brand-mark">
@@ -40,7 +87,13 @@ export default function ProjectDetail({
 
       <main>
 
+        {/* ====================================================
+            PROJECT HERO
+            ==================================================== */}
+
         <section className="project-detail-hero">
+
+          {/* Project Introduction */}
 
           <motion.div
             className="project-detail-copy"
@@ -60,9 +113,12 @@ export default function ProjectDetail({
             }}
           >
 
+            {/* Back Button */}
+
             <a
-              href={`${import.meta.env.BASE_URL}#projects`}
+              href={import.meta.env.BASE_URL}
               className="back-link"
+              onClick={goBackToPortfolio}
             >
 
               <ArrowLeft size={15} />
@@ -72,24 +128,32 @@ export default function ProjectDetail({
             </a>
 
 
+            {/* Label */}
+
             <span className="eyebrow">
               PROJECT SHOWCASE
             </span>
 
+
+            {/* Project Title */}
 
             <h1>
               {project.title}
             </h1>
 
 
+            {/* Project Description */}
+
             <p className="project-detail-description">
               {project.description}
             </p>
 
 
+            {/* Technology Tags */}
+
             <div className="project-tags">
 
-              {project.technologies.map(
+              {project.technologies?.map(
                 (technology) => (
 
                   <span key={technology}>
@@ -102,26 +166,37 @@ export default function ProjectDetail({
             </div>
 
 
+            {/* Hero Actions */}
+
             <div className="hero-actions">
 
+              {/* GitHub */}
+
+              {project.github && (
+
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button primary"
+                  aria-label={`View ${project.title} source code on GitHub`}
+                >
+
+                  View Source
+
+                  <Github size={17} />
+
+                </a>
+
+              )}
+
+
+              {/* All Projects */}
+
               <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-
-                className="button primary"
-              >
-
-                View Source
-
-                <Github size={17} />
-
-              </a>
-
-
-              <a
-                href={`${import.meta.env.BASE_URL}#projects`}
+                href={import.meta.env.BASE_URL}
                 className="button secondary"
+                onClick={goBackToPortfolio}
               >
 
                 All Projects
@@ -135,97 +210,124 @@ export default function ProjectDetail({
           </motion.div>
 
 
-          <motion.div
-            className="project-main-image"
+          {/* ==================================================
+              MAIN PROJECT IMAGE
+              ================================================== */}
 
-            initial={{
-              opacity: 0,
-              scale: 0.9,
-            }}
+          {images.length > 0 && (
 
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
+            <motion.div
+              className="project-main-image"
 
-            transition={{
-              duration: 0.8,
-              delay: 0.15,
-            }}
-          >
+              initial={{
+                opacity: 0,
+                scale: 0.9,
+              }}
 
-            <img
-              src={project.images[0]}
-              alt={project.title}
-            />
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
 
-          </motion.div>
+              transition={{
+                duration: 0.8,
+                delay: 0.15,
+              }}
+            >
+
+              <img
+                src={images[0]}
+                alt={`${project.title} project preview`}
+              />
+
+            </motion.div>
+
+          )}
 
         </section>
 
 
-        <section className="project-gallery-section">
-
-          <span className="eyebrow">
+        {/* ====================================================
             VISUAL SHOWCASE
-          </span>
+            ==================================================== */}
+
+        {images.length > 0 && (
+
+          <section className="project-gallery-section">
+
+            <span className="eyebrow">
+              VISUAL SHOWCASE
+            </span>
 
 
-          <h2>
-            Project Interface
-          </h2>
+            <h2>
+              Project Interface
+            </h2>
 
 
-          <p className="gallery-description">
-            Project-specific visuals and
-            implementation screens.
-          </p>
+            <p className="gallery-description">
+              Project-specific visuals and
+              implementation screens.
+            </p>
 
 
-          <div className="project-gallery">
+            <div className="project-gallery">
 
-            {project.images.map(
-              (image, index) => (
+              {images.map(
+                (image, index) => (
 
-                <motion.figure
-                  key={image}
+                  <motion.figure
+                    key={image}
 
-                  initial={{
-                    opacity: 0,
-                    y: 35,
-                  }}
+                    initial={{
+                      opacity: 0,
+                      y: 35,
+                    }}
 
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
 
-                  viewport={{
-                    once: true,
-                  }}
+                    viewport={{
+                      once: true,
+                    }}
 
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                  }}
-                >
+                    transition={{
+                      duration: 0.6,
+                      delay: index * 0.1,
+                    }}
+                  >
 
-                  <img
-                    src={image}
-                    alt={`${project.title} ${index + 1}`}
-                  />
+                    <img
+                      src={image}
+                      alt={`${project.title} showcase ${index + 1}`}
+                      loading={
+                        index === 0
+                          ? "eager"
+                          : "lazy"
+                      }
+                    />
 
-                </motion.figure>
+                  </motion.figure>
 
-              )
-            )}
+                )
+              )}
 
-          </div>
+            </div>
 
-        </section>
+          </section>
 
+        )}
+
+
+        {/* ====================================================
+            PROJECT INFORMATION
+            ==================================================== */}
 
         <section className="project-information">
+
+          {/* Key Features */}
 
           <div>
 
@@ -241,7 +343,7 @@ export default function ProjectDetail({
 
             <div className="feature-list">
 
-              {project.features.map(
+              {project.features?.map(
                 (feature) => (
 
                   <div
@@ -267,6 +369,8 @@ export default function ProjectDetail({
           </div>
 
 
+          {/* Technology */}
+
           <div>
 
             <span className="eyebrow">
@@ -281,7 +385,7 @@ export default function ProjectDetail({
 
             <div className="detail-tech-list">
 
-              {project.technologies.map(
+              {project.technologies?.map(
                 (technology) => (
 
                   <span key={technology}>
@@ -298,6 +402,10 @@ export default function ProjectDetail({
         </section>
 
 
+        {/* ====================================================
+            PROJECT CTA
+            ==================================================== */}
+
         <section className="project-cta">
 
           <span className="eyebrow">
@@ -311,8 +419,9 @@ export default function ProjectDetail({
 
 
           <a
-            href={`${import.meta.env.BASE_URL}#projects`}
+            href={import.meta.env.BASE_URL}
             className="button primary"
+            onClick={goBackToPortfolio}
           >
 
             Back to Portfolio

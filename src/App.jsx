@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -30,101 +32,147 @@ import {
   technologies,
 } from "./data/portfolioData";
 
-
 export default function App() {
+  /* =========================================================
+     GITHUB PAGES BASE PATH
+     ========================================================= */
 
   const basePath = import.meta.env.BASE_URL;
 
-const pathname = window.location.pathname.startsWith(basePath)
-  ? window.location.pathname.slice(basePath.length - 1)
-  : window.location.pathname;
+  /*
+   * Convert the current browser path into an application path.
+   *
+   * GitHub Pages:
+   * /jaganmohan-portfolio/project/face-attendance/
+   *
+   * Becomes:
+   * /project/face-attendance/
+   */
+  const pathname = window.location.pathname.startsWith(basePath)
+    ? window.location.pathname.slice(basePath.length - 1)
+    : window.location.pathname;
 
-if (pathname.startsWith("/project/")) {
-  const id = pathname
-    .split("/")
-    .filter(Boolean)[1];
+  /* =========================================================
+     RESTORE SCROLL POSITION
+     ========================================================= */
 
-  const project = projects.find(
-    (item) => item.id === id
-  );
+  useEffect(() => {
+    const savedPosition = sessionStorage.getItem(
+      "portfolio-scroll-position"
+    );
 
-  if (project) {
-    return <ProjectDetail project={project} />;
+    if (!savedPosition) {
+      return;
+    }
+
+    /*
+     * Wait until the page has rendered before scrolling.
+     * This prevents the browser from scrolling before all
+     * portfolio sections have been created.
+     */
+    const restoreScroll = () => {
+      window.scrollTo({
+        top: Number(savedPosition),
+        left: 0,
+        behavior: "auto",
+      });
+
+      sessionStorage.removeItem(
+        "portfolio-scroll-position"
+      );
+    };
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(restoreScroll);
+    });
+  }, []);
+
+  /* =========================================================
+     PROJECT ROUTING
+     ========================================================= */
+
+  if (pathname.startsWith("/project/")) {
+    const id = pathname
+      .split("/")
+      .filter(Boolean)[1];
+
+    const project = projects.find(
+      (item) => item.id === id
+    );
+
+    if (project) {
+      return (
+        <ProjectDetail
+          project={project}
+        />
+      );
+    }
   }
-}
+
+  /* =========================================================
+     MAIN PORTFOLIO
+     ========================================================= */
 
   return (
-
     <div className="app">
 
+      {/* Background */}
       <div className="background-grid" />
 
       <div className="background-glow glow-one" />
 
       <div className="background-glow glow-two" />
 
-
+      {/* Navbar */}
       <Navbar />
-
 
       <main>
 
-        {/* ================= HERO ================= */}
+        {/* =====================================================
+            HERO
+            ===================================================== */}
 
         <section className="hero">
-
           <div className="hero-grid">
 
+            {/* Hero Content */}
             <motion.div
               className="hero-copy"
-
               initial={{
                 opacity: 0,
                 x: -40,
               }}
-
               animate={{
                 opacity: 1,
                 x: 0,
               }}
-
               transition={{
                 duration: 0.9,
               }}
             >
 
               <div className="status-pill">
-
                 <span className="status-dot" />
 
                 Available for opportunities
-
               </div>
-
 
               <p className="hero-kicker">
                 MACHINE LEARNING ENGINEER
               </p>
 
-
               <h1>
-
                 Building{" "}
-
                 <span>
                   intelligent
                 </span>{" "}
-
                 software for real-world
                 problems.
-
               </h1>
-
 
               <p className="hero-text">
                 {profile.tagline}
               </p>
-
 
               <div className="hero-actions">
 
@@ -132,31 +180,25 @@ if (pathname.startsWith("/project/")) {
                   href="#projects"
                   className="button primary"
                 >
-
                   Explore My Work
 
                   <ArrowUpRight
                     size={18}
                   />
-
                 </a>
-
 
                 <a
                   href="#contact"
                   className="button secondary"
                 >
-
                   Let's Connect
 
                   <MessageCircle
                     size={18}
                   />
-
                 </a>
 
               </div>
-
 
               <div className="hero-socials">
 
@@ -164,52 +206,45 @@ if (pathname.startsWith("/project/")) {
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="GitHub"
                 >
-
                   <Github size={19} />
-
                 </a>
-
 
                 <a
                   href={profile.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="LinkedIn"
                 >
-
                   <Linkedin size={19} />
-
                 </a>
-
 
                 <a
                   href={`mailto:${profile.email}`}
+                  aria-label="Email"
                 >
-
                   <Mail size={19} />
-
                 </a>
 
               </div>
 
             </motion.div>
 
-
-            {/* PROFILE */}
+            {/* =================================================
+                PROFILE VISUAL
+                ================================================= */}
 
             <motion.div
               className="hero-visual"
-
               initial={{
                 opacity: 0,
                 scale: 0.85,
               }}
-
               animate={{
                 opacity: 1,
                 scale: 1,
               }}
-
               transition={{
                 duration: 1,
                 delay: 0.15,
@@ -221,12 +256,11 @@ if (pathname.startsWith("/project/")) {
                 <div className="profile-image">
 
                   <img
-                    src={`${import.meta.env.BASE_URL}profile.jpg`}
+                    src={`${basePath}profile.jpg`}
                     alt="Jagan Mohan Indheti"
                   />
 
                 </div>
-
 
                 <div className="profile-card-bottom">
 
@@ -242,25 +276,21 @@ if (pathname.startsWith("/project/")) {
 
                   </div>
 
-
                   <span className="mini-code">
-
                     <Code2 size={17} />
-
                   </span>
 
                 </div>
 
               </div>
 
+              {/* AI Floating Card */}
 
               <motion.div
                 className="floating-card card-ai"
-
                 animate={{
                   y: [0, -10, 0],
                 }}
-
                 transition={{
                   duration: 4,
                   repeat: Infinity,
@@ -283,14 +313,13 @@ if (pathname.startsWith("/project/")) {
 
               </motion.div>
 
+              {/* Python Floating Card */}
 
               <motion.div
                 className="floating-card card-python"
-
                 animate={{
                   y: [0, 10, 0],
                 }}
-
                 transition={{
                   duration: 4.5,
                   repeat: Infinity,
@@ -316,11 +345,11 @@ if (pathname.startsWith("/project/")) {
             </motion.div>
 
           </div>
-
         </section>
 
-
-        {/* ================= ABOUT ================= */}
+        {/* =====================================================
+            ABOUT
+            ===================================================== */}
 
         <section
           id="about"
@@ -333,22 +362,18 @@ if (pathname.startsWith("/project/")) {
             description="My approach combines software engineering with machine learning to create solutions that are practical, understandable and built around real user needs."
           />
 
-
           <div className="about-grid">
 
             <motion.div
               className="about-story"
-
               initial={{
                 opacity: 0,
                 x: -30,
               }}
-
               whileInView={{
                 opacity: 1,
                 x: 0,
               }}
-
               viewport={{
                 once: true,
               }}
@@ -365,14 +390,12 @@ if (pathname.startsWith("/project/")) {
                 that solve meaningful problems.
               </p>
 
-
               <p>
                 My experience spans machine
                 learning, computer vision,
                 web and mobile application
                 development.
               </p>
-
 
               <p>
                 I enjoy working across the
@@ -383,7 +406,6 @@ if (pathname.startsWith("/project/")) {
 
             </motion.div>
 
-
             <div className="about-facts">
 
               {[
@@ -392,13 +414,11 @@ if (pathname.startsWith("/project/")) {
                   "AI First",
                   "Machine learning & computer vision",
                 ],
-
                 [
                   "02",
                   "Product Mindset",
                   "Technology designed around real problems",
                 ],
-
                 [
                   "03",
                   "Full Development",
@@ -410,7 +430,6 @@ if (pathname.startsWith("/project/")) {
                   <motion.div
                     className="fact"
                     key={number}
-
                     whileHover={{
                       x: 8,
                     }}
@@ -443,8 +462,9 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= SKILLS ================= */}
+        {/* =====================================================
+            SKILLS
+            ===================================================== */}
 
         <section
           id="skills"
@@ -456,7 +476,6 @@ if (pathname.startsWith("/project/")) {
             title="Technologies I work with."
             description="A practical stack covering AI, application development, backend services and modern frontend development."
           />
-
 
           <div className="skills-grid">
 
@@ -482,24 +501,19 @@ if (pathname.startsWith("/project/")) {
 
                     </div>
 
-
                     <div className="skill-track">
 
                       <motion.div
                         className="skill-fill"
-
                         initial={{
                           width: 0,
                         }}
-
                         whileInView={{
                           width: `${skill.level}%`,
                         }}
-
                         viewport={{
                           once: true,
                         }}
-
                         transition={{
                           duration: 1,
                         }}
@@ -514,20 +528,16 @@ if (pathname.startsWith("/project/")) {
 
             </div>
 
-
             <motion.div
               className="tech-cloud"
-
               initial={{
                 opacity: 0,
                 scale: 0.95,
               }}
-
               whileInView={{
                 opacity: 1,
                 scale: 1,
               }}
-
               viewport={{
                 once: true,
               }}
@@ -536,7 +546,6 @@ if (pathname.startsWith("/project/")) {
               <span className="tech-title">
                 TECHNOLOGY STACK
               </span>
-
 
               <div className="tech-list">
 
@@ -560,8 +569,9 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= EXPERIENCE ================= */}
+        {/* =====================================================
+            EXPERIENCE
+            ===================================================== */}
 
         <section
           id="experience"
@@ -574,7 +584,6 @@ if (pathname.startsWith("/project/")) {
             description="Experience developing practical software and machine-learning solutions."
           />
 
-
           <div className="timeline">
 
             {experiences.map(
@@ -583,17 +592,14 @@ if (pathname.startsWith("/project/")) {
                 <motion.article
                   className="timeline-item"
                   key={experience.company}
-
                   initial={{
                     opacity: 0,
                     x: -25,
                   }}
-
                   whileInView={{
                     opacity: 1,
                     x: 0,
                   }}
-
                   viewport={{
                     once: true,
                   }}
@@ -607,28 +613,23 @@ if (pathname.startsWith("/project/")) {
 
                   </div>
 
-
                   <div className="timeline-content">
 
                     <span className="period">
                       {experience.period}
                     </span>
 
-
                     <h3>
                       {experience.title}
                     </h3>
-
 
                     <h4>
                       {experience.company}
                     </h4>
 
-
                     <p>
                       {experience.description}
                     </p>
-
 
                     <ul>
 
@@ -661,8 +662,9 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= PROJECTS ================= */}
+        {/* =====================================================
+            PROJECTS
+            ===================================================== */}
 
         <section
           id="projects"
@@ -672,9 +674,8 @@ if (pathname.startsWith("/project/")) {
           <SectionHeading
             number="04 / SELECTED WORK"
             title="Projects that demonstrate how I build."
-            description="Each project has its own dedicated visual showcase. Open a project to explore it in a separate tab."
+            description="Each project has its own dedicated visual showcase. Open a project to explore it in a separate page."
           />
-
 
           <div className="project-grid">
 
@@ -694,8 +695,9 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= SERVICES ================= */}
+        {/* =====================================================
+            SERVICES
+            ===================================================== */}
 
         <section className="section">
 
@@ -703,7 +705,6 @@ if (pathname.startsWith("/project/")) {
             number="05 / CAPABILITIES"
             title="What I can build."
           />
-
 
           <div className="service-grid">
 
@@ -713,7 +714,6 @@ if (pathname.startsWith("/project/")) {
                 <motion.div
                   className="service-card"
                   key={service.number}
-
                   whileHover={{
                     y: -8,
                   }}
@@ -723,16 +723,13 @@ if (pathname.startsWith("/project/")) {
                     {service.number}
                   </span>
 
-
                   <h3>
                     {service.title}
                   </h3>
 
-
                   <p>
                     {service.description}
                   </p>
-
 
                   <ArrowUpRight
                     size={20}
@@ -747,24 +744,22 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= EDUCATION ================= */}
+        {/* =====================================================
+            EDUCATION
+            ===================================================== */}
 
         <section className="section">
 
           <motion.div
             className="education-card"
-
             initial={{
               opacity: 0,
               y: 30,
             }}
-
             whileInView={{
               opacity: 1,
               y: 0,
             }}
-
             viewport={{
               once: true,
             }}
@@ -778,16 +773,13 @@ if (pathname.startsWith("/project/")) {
                 06 / EDUCATION
               </span>
 
-
               <h2>
                 {education.degree}
               </h2>
 
-
               <h3>
                 {education.field}
               </h3>
-
 
               <p>
                 {education.institution}
@@ -801,8 +793,9 @@ if (pathname.startsWith("/project/")) {
 
         </section>
 
-
-        {/* ================= CONTACT ================= */}
+        {/* =====================================================
+            CONTACT
+            ===================================================== */}
 
         <section
           id="contact"
@@ -815,11 +808,9 @@ if (pathname.startsWith("/project/")) {
               07 / CONTACT
             </span>
 
-
             <h2>
               Have an idea worth building?
             </h2>
-
 
             <p>
               I'm open to software development,
@@ -827,7 +818,6 @@ if (pathname.startsWith("/project/")) {
               collaborations and interesting
               technical projects.
             </p>
-
 
             <div className="contact-actions">
 
@@ -841,7 +831,6 @@ if (pathname.startsWith("/project/")) {
                 <Mail size={18} />
 
               </a>
-
 
               <a
                 href={profile.resume}
@@ -857,7 +846,6 @@ if (pathname.startsWith("/project/")) {
 
             </div>
 
-
             <div className="contact-details">
 
               <span>
@@ -867,7 +855,6 @@ if (pathname.startsWith("/project/")) {
                 {profile.email}
 
               </span>
-
 
               <span>
 
@@ -885,6 +872,9 @@ if (pathname.startsWith("/project/")) {
 
       </main>
 
+      {/* =======================================================
+          FOOTER
+          ======================================================= */}
 
       <footer className="footer">
 
@@ -901,41 +891,34 @@ if (pathname.startsWith("/project/")) {
 
         </div>
 
-
         <div className="footer-links">
 
           <a
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
           >
-
             <Github size={17} />
-
           </a>
-
 
           <a
             href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
-
             <Linkedin size={17} />
-
           </a>
-
 
           <a
             href={`mailto:${profile.email}`}
+            aria-label="Email"
           >
-
             <Mail size={17} />
-
           </a>
 
         </div>
-
 
         <span className="copyright">
 

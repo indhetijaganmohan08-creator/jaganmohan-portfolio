@@ -82,17 +82,17 @@ export default function ProjectCard({
 
       <a
         href={`${import.meta.env.BASE_URL}project/${project.id}/`}
-        target="_blank"
-        rel="noopener noreferrer"
-
-        className="project-view"
-      >
-
-        Open Project Showcase
-
-        <ArrowUpRight size={17} />
-
-      </a>
+        onClick={() => {
+          sessionStorage.setItem(
+            "portfolio-scroll-position",
+            window.scrollY.toString()
+      );
+     }}
+    className="project-view"
+  >
+    Open Project Showcase
+    <ArrowUpRight size={17} />
+</a>
 
     </motion.article>
   );
