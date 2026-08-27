@@ -86,7 +86,7 @@ export const technologies = [
 
 export const experiences = [
   {
-    period: "Dec 2025 — May 2026",
+    period: "Sep 2025 — Aug 2026",
 
     title: "Machine Learning Developer",
 
