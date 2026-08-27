@@ -2529,4 +2529,687 @@ img {
 
     padding-bottom: 90px;
   }
+}/* =========================================================
+   FIXED / STICKY NAVIGATION
+   ========================================================= */
+
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  z-index: 9999;
+
+  /* Keep the existing visual design while scrolling */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  background: rgba(10, 10, 12, 0.82);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-sizing: border-box;
+}
+
+
+/* Navbar content */
+
+.navbar-inner {
+  width: min(1200px, calc(100% - 40px));
+
+  min-height: 76px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+
+/* Brand */
+
+.navbar-fixed .brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+}
+
+
+/* Desktop navigation */
+
+.navbar-fixed .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+
+/* Navigation links */
+
+.navbar-fixed .nav-links > a:not(.nav-cta) {
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.navbar-fixed .nav-links > a:not(.nav-cta):hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+
+/* Resume button */
+
+.navbar-fixed .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  text-decoration: none;
+
+  padding: 10px 15px;
+
+  border-radius: 8px;
+
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.navbar-fixed .nav-cta:hover {
+  background: rgba(255, 255, 255, 0.14);
+
+  border-color: rgba(255, 255, 255, 0.2);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.mobile-menu-button {
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .navbar-inner {
+    width: min(100% - 28px, 1200px);
+
+    min-height: 68px;
+  }
+
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+
+  .navbar-fixed .nav-links {
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    left: 0;
+    right: 0;
+
+    display: none;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 0;
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    background: rgba(10, 10, 12, 0.96);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+
+  .navbar-fixed .nav-links.open {
+    display: flex;
+  }
+
+
+  .navbar-fixed .nav-links > a:not(.nav-cta) {
+    display: block;
+
+    padding: 13px 14px;
+
+    border-radius: 7px;
+  }
+
+
+  .navbar-fixed .nav-links > a:not(.nav-cta):hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+
+  .navbar-fixed .nav-cta {
+    justify-content: center;
+
+    margin-top: 6px;
+  }
+}
+
+
+/* =========================================================
+   PREVENT ANCHOR TARGETS FROM HIDING UNDER FIXED NAVBAR
+   ========================================================= */
+
+section[id] {
+  scroll-margin-top: 95px;
+}
+/* =========================================================
+   PREMIUM PROFESSIONAL TYPOGRAPHY
+   ========================================================= */
+
+:root {
+  --font-professional:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html,
+body {
+  font-family: var(--font-professional);
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar-fixed .brand {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.navbar-fixed .nav-links > a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+}
+
+.hero h1 {
+  font-size: clamp(50px, 6vw, 72px);
+  line-height: 0.98;
+  font-weight: 650;
+  letter-spacing: -0.05em;
+}
+
+.hero-text {
+  font-size: 17px;
+  line-height: 1.75;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+   ========================================================= */
+
+.eyebrow {
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.section-heading h2 {
+  font-size: clamp(38px, 4vw, 50px);
+  line-height: 1.08;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+
+.section-heading p {
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+  max-width: 650px;
+}
+
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about-story p {
+  font-size: 17px;
+  line-height: 1.8;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+.about-story strong {
+  font-weight: 600;
+}
+
+.fact strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.fact p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SKILLS
+   ========================================================= */
+
+.skill-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.skill-label span:last-child {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tech-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.tech-list span {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   EXPERIENCE
+   ========================================================= */
+
+.period {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.timeline-content h3 {
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.timeline-content h4 {
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.timeline-content p {
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.timeline-content li {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+
+.project-number {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.project-top span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-card h3 {
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.project-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.project-tech span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.project-view {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+.service-card > span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.service-card h3 {
+  font-size: 23px;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.service-card p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   EDUCATION
+   ========================================================= */
+
+.education-card h2 {
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.education-card h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.education-card p {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-inner h2 {
+  font-size: clamp(42px, 5vw, 62px);
+  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+}
+
+.contact-inner p {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.contact-details {
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.profile-card-bottom strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.profile-card-bottom small {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   FLOATING CARDS
+   ========================================================= */
+
+.floating-card strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.floating-card small {
+  font-size: 11px;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   PROJECT DETAIL PAGE
+   ========================================================= */
+
+.project-detail-copy h1 {
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+}
+
+.project-detail-description {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.project-gallery-section h2,
+.project-information h2 {
+  font-size: clamp(32px, 3.5vw, 44px);
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.gallery-description {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.feature-item {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.detail-tech-list span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.footer span {
+  font-size: 12px;
+}
+
+.copyright {
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   MOBILE TYPOGRAPHY
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .hero h1 {
+    font-size: clamp(42px, 11vw, 58px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-text {
+    font-size: 16px;
+  }
+
+  .section-heading h2 {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+
+  .section-heading p {
+    font-size: 15px;
+  }
+
+  .about-story p {
+    font-size: 16px;
+  }
+
+  .project-card h3 {
+    font-size: 23px;
+  }
+
+  .timeline-content h3 {
+    font-size: 23px;
+  }
+
+  .contact-inner h2 {
+    font-size: 40px;
+  }
+
+  .project-detail-copy h1 {
+    font-size: 42px;
+  }
+
+  .project-gallery-section h2,
+  .project-information h2 {
+    font-size: 32px;
+  }
 }

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -11,53 +10,54 @@ import { motion } from "framer-motion";
 import { profile } from "../data/portfolioData";
 
 
-export default function ProjectDetail({ project }) {
+export default function ProjectDetail({
+  project,
+}) {
 
-    useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-  }, [project.id]);
   /*
    * ============================================================
-   * GO BACK TO PREVIOUS PORTFOLIO POSITION
+   * RETURN TO PORTFOLIO
    * ============================================================
    *
-   * ProjectCard stores the user's scroll position before opening
-   * the project.
-   *
-   * Using browser history here takes the user back to the
-   * portfolio instead of loading the homepage from the top.
+   * Browser history takes the user back to the exact location
+   * and scroll position where they opened the project.
    */
+
   const goBackToPortfolio = (event) => {
+
     event.preventDefault();
 
-    /*
-     * If there is browser history available, go back.
-     */
-    if (window.history.length > 1) {
-      window.history.back();
-      return;
-    }
 
     /*
-     * Fallback for cases where the project page was opened
-     * directly.
+     * If the project was opened from the portfolio,
+     * browser history will contain the portfolio page.
      */
-    window.location.href = import.meta.env.BASE_URL;
+
+    if (window.history.length > 1) {
+
+      window.history.back();
+
+      return;
+
+    }
+
+
+    /*
+     * Fallback if someone directly opens the project URL.
+     */
+
+    window.location.href =
+      import.meta.env.BASE_URL;
+
   };
 
 
   /*
    * ============================================================
-   * PROJECT IMAGE FALLBACK
+   * PROJECT IMAGES
    * ============================================================
-   *
-   * Prevents the page from breaking visually if a project
-   * happens to have no images.
    */
+
   const images = Array.isArray(project?.images)
     ? project.images
     : [];
@@ -76,8 +76,8 @@ export default function ProjectDetail({ project }) {
         <a
           href={import.meta.env.BASE_URL}
           className="brand"
-          aria-label="Return to portfolio homepage"
           onClick={goBackToPortfolio}
+          aria-label="Return to portfolio"
         >
 
           <span className="brand-mark">
@@ -101,8 +101,6 @@ export default function ProjectDetail({ project }) {
 
         <section className="project-detail-hero">
 
-          {/* Project Introduction */}
-
           <motion.div
             className="project-detail-copy"
 
@@ -121,7 +119,7 @@ export default function ProjectDetail({ project }) {
             }}
           >
 
-            {/* Back Button */}
+            {/* Back */}
 
             <a
               href={import.meta.env.BASE_URL}
@@ -143,21 +141,21 @@ export default function ProjectDetail({ project }) {
             </span>
 
 
-            {/* Project Title */}
+            {/* Title */}
 
             <h1>
               {project.title}
             </h1>
 
 
-            {/* Project Description */}
+            {/* Description */}
 
             <p className="project-detail-description">
               {project.description}
             </p>
 
 
-            {/* Technology Tags */}
+            {/* Technologies */}
 
             <div className="project-tags">
 
@@ -174,11 +172,9 @@ export default function ProjectDetail({ project }) {
             </div>
 
 
-            {/* Hero Actions */}
+            {/* Actions */}
 
             <div className="hero-actions">
-
-              {/* GitHub */}
 
               {project.github && (
 
@@ -187,7 +183,6 @@ export default function ProjectDetail({ project }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="button primary"
-                  aria-label={`View ${project.title} source code on GitHub`}
                 >
 
                   View Source
@@ -198,8 +193,6 @@ export default function ProjectDetail({ project }) {
 
               )}
 
-
-              {/* All Projects */}
 
               <a
                 href={import.meta.env.BASE_URL}
@@ -219,7 +212,7 @@ export default function ProjectDetail({ project }) {
 
 
           {/* ==================================================
-              MAIN PROJECT IMAGE
+              MAIN IMAGE
               ================================================== */}
 
           {images.length > 0 && (
@@ -256,7 +249,7 @@ export default function ProjectDetail({ project }) {
 
 
         {/* ====================================================
-            VISUAL SHOWCASE
+            IMAGE GALLERY
             ==================================================== */}
 
         {images.length > 0 && (
@@ -335,7 +328,9 @@ export default function ProjectDetail({ project }) {
 
         <section className="project-information">
 
-          {/* Key Features */}
+          {/* ==================================================
+              FEATURES
+              ================================================== */}
 
           <div>
 
@@ -377,7 +372,9 @@ export default function ProjectDetail({ project }) {
           </div>
 
 
-          {/* Technology */}
+          {/* ==================================================
+              TECHNOLOGY STACK
+              ================================================== */}
 
           <div>
 
@@ -411,7 +408,7 @@ export default function ProjectDetail({ project }) {
 
 
         {/* ====================================================
-            PROJECT CTA
+            CTA
             ==================================================== */}
 
         <section className="project-cta">
@@ -443,5 +440,6 @@ export default function ProjectDetail({ project }) {
       </main>
 
     </div>
+
   );
 }

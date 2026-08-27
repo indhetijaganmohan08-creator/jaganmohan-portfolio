@@ -11,6 +11,20 @@ export default function ProjectCard({
   index,
 }) {
 
+  /*
+   * Save the current portfolio scroll position
+   * before opening the project.
+   */
+  const handleProjectClick = () => {
+
+    sessionStorage.setItem(
+      "portfolio-scroll-position",
+      window.scrollY.toString()
+    );
+
+  };
+
+
   return (
 
     <motion.article
@@ -37,10 +51,20 @@ export default function ProjectCard({
       }}
     >
 
+      {/* ======================================================
+          PROJECT NUMBER
+          ====================================================== */}
+
       <div className="project-number">
-        0{index + 1}
+
+        {String(index + 1).padStart(2, "0")}
+
       </div>
 
+
+      {/* ======================================================
+          PROJECT TYPE
+          ====================================================== */}
 
       <div className="project-top">
 
@@ -48,26 +72,36 @@ export default function ProjectCard({
           {project.type}
         </span>
 
-        <ExternalLink
-          size={17}
-        />
+        <ExternalLink size={17} />
 
       </div>
 
+
+      {/* ======================================================
+          TITLE
+          ====================================================== */}
 
       <h3>
         {project.title}
       </h3>
 
 
+      {/* ======================================================
+          DESCRIPTION
+          ====================================================== */}
+
       <p>
         {project.description}
       </p>
 
 
+      {/* ======================================================
+          TECHNOLOGIES
+          ====================================================== */}
+
       <div className="project-tech">
 
-        {project.technologies.map(
+        {project.technologies?.map(
           (technology) => (
 
             <span key={technology}>
@@ -80,20 +114,23 @@ export default function ProjectCard({
       </div>
 
 
+      {/* ======================================================
+          PROJECT LINK
+          ====================================================== */}
+
       <a
         href={`${import.meta.env.BASE_URL}project/${project.id}/`}
-        onClick={() => {
-          sessionStorage.setItem(
-            "portfolio-scroll-position",
-            window.scrollY.toString()
-      );
-     }}
-    className="project-view"
-  >
-    Open Project Showcase
-    <ArrowUpRight size={17} />
-</a>
+        onClick={handleProjectClick}
+        className="project-view"
+      >
+
+        Open Project Showcase
+
+        <ArrowUpRight size={17} />
+
+      </a>
 
     </motion.article>
+
   );
 }

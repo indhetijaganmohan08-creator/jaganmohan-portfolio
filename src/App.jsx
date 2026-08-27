@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 import {
   ArrowUpRight,
@@ -32,66 +32,69 @@ import {
   technologies,
 } from "./data/portfolioData";
 
+
 export default function App() {
-  /* =========================================================
-     GITHUB PAGES BASE PATH
-     ========================================================= */
+
+  /*
+   * ============================================================
+   * GITHUB PAGES BASE PATH
+   * ============================================================
+   */
 
   const basePath = import.meta.env.BASE_URL;
 
+  const pathname =
+    window.location.pathname.startsWith(basePath)
+      ? window.location.pathname.slice(basePath.length - 1)
+      : window.location.pathname;
+
+
   /*
-   * Convert the current browser path into an application path.
+   * ============================================================
+   * SCROLL RESTORATION
+   * ============================================================
    *
-   * GitHub Pages:
-   * /jaganmohan-portfolio/project/face-attendance/
+   * We disable the browser's automatic scroll restoration.
    *
-   * Becomes:
+   * This is important because when opening:
+   *
    * /project/face-attendance/
+   *
+   * the browser may otherwise keep the previous portfolio
+   * scroll position.
    */
-  const pathname = window.location.pathname.startsWith(basePath)
-    ? window.location.pathname.slice(basePath.length - 1)
-    : window.location.pathname;
 
-  /* =========================================================
-     RESTORE SCROLL POSITION
-     ========================================================= */
+  useLayoutEffect(() => {
 
-  useEffect(() => {
-    const savedPosition = sessionStorage.getItem(
-      "portfolio-scroll-position"
-    );
-
-    if (!savedPosition) {
-      return;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
 
     /*
-     * Wait until the page has rendered before scrolling.
-     * This prevents the browser from scrolling before all
-     * portfolio sections have been created.
+     * Project pages must ALWAYS start at the top.
      */
-    const restoreScroll = () => {
+
+    if (pathname.startsWith("/project/")) {
+
       window.scrollTo({
-        top: Number(savedPosition),
+        top: 0,
         left: 0,
         behavior: "auto",
       });
 
-      sessionStorage.removeItem(
-        "portfolio-scroll-position"
-      );
-    };
+    }
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(restoreScroll);
-    });
-  }, []);
+  }, [pathname]);
 
-  /* =========================================================
-     PROJECT ROUTING
-     ========================================================= */
+
+  /*
+   * ============================================================
+   * PROJECT ROUTING
+   * ============================================================
+   */
 
   if (pathname.startsWith("/project/")) {
+
     const id = pathname
       .split("/")
       .filter(Boolean)[1];
@@ -101,78 +104,98 @@ export default function App() {
     );
 
     if (project) {
+
       return (
         <ProjectDetail
           project={project}
         />
       );
+
     }
+
   }
 
-  /* =========================================================
-     MAIN PORTFOLIO
-     ========================================================= */
+
+  /*
+   * ============================================================
+   * MAIN PORTFOLIO
+   * ============================================================
+   */
 
   return (
+
     <div className="app">
 
-      {/* Background */}
       <div className="background-grid" />
 
       <div className="background-glow glow-one" />
 
       <div className="background-glow glow-two" />
 
-      {/* Navbar */}
+
       <Navbar />
+
 
       <main>
 
-        {/* =====================================================
+        {/* ======================================================
             HERO
-            ===================================================== */}
+            ====================================================== */}
 
         <section className="hero">
+
           <div className="hero-grid">
 
-            {/* Hero Content */}
             <motion.div
               className="hero-copy"
+
               initial={{
                 opacity: 0,
                 x: -40,
               }}
+
               animate={{
                 opacity: 1,
                 x: 0,
               }}
+
               transition={{
                 duration: 0.9,
               }}
             >
 
               <div className="status-pill">
+
                 <span className="status-dot" />
 
                 Available for opportunities
+
               </div>
+
 
               <p className="hero-kicker">
                 MACHINE LEARNING ENGINEER
               </p>
 
+
               <h1>
+
                 Building{" "}
+
                 <span>
                   intelligent
                 </span>{" "}
+
                 software for real-world
                 problems.
+
               </h1>
+
 
               <p className="hero-text">
                 {profile.tagline}
               </p>
+
 
               <div className="hero-actions">
 
@@ -180,25 +203,27 @@ export default function App() {
                   href="#projects"
                   className="button primary"
                 >
+
                   Explore My Work
 
-                  <ArrowUpRight
-                    size={18}
-                  />
+                  <ArrowUpRight size={18} />
+
                 </a>
+
 
                 <a
                   href="#contact"
                   className="button secondary"
                 >
+
                   Let's Connect
 
-                  <MessageCircle
-                    size={18}
-                  />
+                  <MessageCircle size={18} />
+
                 </a>
 
               </div>
+
 
               <div className="hero-socials">
 
@@ -208,8 +233,11 @@ export default function App() {
                   rel="noopener noreferrer"
                   aria-label="GitHub"
                 >
+
                   <Github size={19} />
+
                 </a>
+
 
                 <a
                   href={profile.linkedin}
@@ -217,34 +245,43 @@ export default function App() {
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
                 >
+
                   <Linkedin size={19} />
+
                 </a>
+
 
                 <a
                   href={`mailto:${profile.email}`}
                   aria-label="Email"
                 >
+
                   <Mail size={19} />
+
                 </a>
 
               </div>
 
             </motion.div>
 
-            {/* =================================================
-                PROFILE VISUAL
-                ================================================= */}
+
+            {/* ==================================================
+                PROFILE
+                ================================================== */}
 
             <motion.div
               className="hero-visual"
+
               initial={{
                 opacity: 0,
                 scale: 0.85,
               }}
+
               animate={{
                 opacity: 1,
                 scale: 1,
               }}
+
               transition={{
                 duration: 1,
                 delay: 0.15,
@@ -262,6 +299,7 @@ export default function App() {
 
                 </div>
 
+
                 <div className="profile-card-bottom">
 
                   <div>
@@ -276,21 +314,25 @@ export default function App() {
 
                   </div>
 
+
                   <span className="mini-code">
+
                     <Code2 size={17} />
+
                   </span>
 
                 </div>
 
               </div>
 
-              {/* AI Floating Card */}
 
               <motion.div
                 className="floating-card card-ai"
+
                 animate={{
                   y: [0, -10, 0],
                 }}
+
                 transition={{
                   duration: 4,
                   repeat: Infinity,
@@ -313,13 +355,14 @@ export default function App() {
 
               </motion.div>
 
-              {/* Python Floating Card */}
 
               <motion.div
                 className="floating-card card-python"
+
                 animate={{
                   y: [0, 10, 0],
                 }}
+
                 transition={{
                   duration: 4.5,
                   repeat: Infinity,
@@ -345,11 +388,13 @@ export default function App() {
             </motion.div>
 
           </div>
+
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             ABOUT
-            ===================================================== */}
+            ====================================================== */}
 
         <section
           id="about"
@@ -362,49 +407,64 @@ export default function App() {
             description="My approach combines software engineering with machine learning to create solutions that are practical, understandable and built around real user needs."
           />
 
+
           <div className="about-grid">
 
             <motion.div
               className="about-story"
+
               initial={{
                 opacity: 0,
                 x: -30,
               }}
+
               whileInView={{
                 opacity: 1,
                 x: 0,
               }}
+
               viewport={{
                 once: true,
               }}
             >
 
               <p>
+
                 I'm{" "}
+
                 <strong>
                   Jagan Mohan Indheti
                 </strong>
+
                 , a Machine Learning Engineer
                 and AI Software Developer
                 interested in building products
                 that solve meaningful problems.
+
               </p>
 
+
               <p>
+
                 My experience spans machine
                 learning, computer vision,
                 web and mobile application
                 development.
+
               </p>
 
+
               <p>
+
                 I enjoy working across the
                 journey from an initial concept
                 to a functional software
                 solution.
+
               </p>
 
             </motion.div>
+
 
             <div className="about-facts">
 
@@ -414,22 +474,26 @@ export default function App() {
                   "AI First",
                   "Machine learning & computer vision",
                 ],
+
                 [
                   "02",
                   "Product Mindset",
                   "Technology designed around real problems",
                 ],
+
                 [
                   "03",
                   "Full Development",
                   "Interface to backend integration",
                 ],
+
               ].map(
                 ([number, title, text]) => (
 
                   <motion.div
                     className="fact"
                     key={number}
+
                     whileHover={{
                       x: 8,
                     }}
@@ -462,9 +526,10 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             SKILLS
-            ===================================================== */}
+            ====================================================== */}
 
         <section
           id="skills"
@@ -476,6 +541,7 @@ export default function App() {
             title="Technologies I work with."
             description="A practical stack covering AI, application development, backend services and modern frontend development."
           />
+
 
           <div className="skills-grid">
 
@@ -501,19 +567,24 @@ export default function App() {
 
                     </div>
 
+
                     <div className="skill-track">
 
                       <motion.div
                         className="skill-fill"
+
                         initial={{
                           width: 0,
                         }}
+
                         whileInView={{
                           width: `${skill.level}%`,
                         }}
+
                         viewport={{
                           once: true,
                         }}
+
                         transition={{
                           duration: 1,
                         }}
@@ -528,16 +599,20 @@ export default function App() {
 
             </div>
 
+
             <motion.div
               className="tech-cloud"
+
               initial={{
                 opacity: 0,
                 scale: 0.95,
               }}
+
               whileInView={{
                 opacity: 1,
                 scale: 1,
               }}
+
               viewport={{
                 once: true,
               }}
@@ -547,14 +622,13 @@ export default function App() {
                 TECHNOLOGY STACK
               </span>
 
+
               <div className="tech-list">
 
                 {technologies.map(
                   (technology) => (
 
-                    <span
-                      key={technology}
-                    >
+                    <span key={technology}>
                       {technology}
                     </span>
 
@@ -569,9 +643,10 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             EXPERIENCE
-            ===================================================== */}
+            ====================================================== */}
 
         <section
           id="experience"
@@ -584,6 +659,7 @@ export default function App() {
             description="Experience developing practical software and machine-learning solutions."
           />
 
+
           <div className="timeline">
 
             {experiences.map(
@@ -592,14 +668,17 @@ export default function App() {
                 <motion.article
                   className="timeline-item"
                   key={experience.company}
+
                   initial={{
                     opacity: 0,
                     x: -25,
                   }}
+
                   whileInView={{
                     opacity: 1,
                     x: 0,
                   }}
+
                   viewport={{
                     once: true,
                   }}
@@ -613,23 +692,28 @@ export default function App() {
 
                   </div>
 
+
                   <div className="timeline-content">
 
                     <span className="period">
                       {experience.period}
                     </span>
 
+
                     <h3>
                       {experience.title}
                     </h3>
+
 
                     <h4>
                       {experience.company}
                     </h4>
 
+
                     <p>
                       {experience.description}
                     </p>
+
 
                     <ul>
 
@@ -662,9 +746,10 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             PROJECTS
-            ===================================================== */}
+            ====================================================== */}
 
         <section
           id="projects"
@@ -674,8 +759,9 @@ export default function App() {
           <SectionHeading
             number="04 / SELECTED WORK"
             title="Projects that demonstrate how I build."
-            description="Each project has its own dedicated visual showcase. Open a project to explore it in a separate page."
+            description="Each project has its own dedicated visual showcase. Open a project to explore it."
           />
+
 
           <div className="project-grid">
 
@@ -695,9 +781,10 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             SERVICES
-            ===================================================== */}
+            ====================================================== */}
 
         <section className="section">
 
@@ -705,6 +792,7 @@ export default function App() {
             number="05 / CAPABILITIES"
             title="What I can build."
           />
+
 
           <div className="service-grid">
 
@@ -714,6 +802,7 @@ export default function App() {
                 <motion.div
                   className="service-card"
                   key={service.number}
+
                   whileHover={{
                     y: -8,
                   }}
@@ -723,13 +812,16 @@ export default function App() {
                     {service.number}
                   </span>
 
+
                   <h3>
                     {service.title}
                   </h3>
 
+
                   <p>
                     {service.description}
                   </p>
+
 
                   <ArrowUpRight
                     size={20}
@@ -744,22 +836,26 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             EDUCATION
-            ===================================================== */}
+            ====================================================== */}
 
         <section className="section">
 
           <motion.div
             className="education-card"
+
             initial={{
               opacity: 0,
               y: 30,
             }}
+
             whileInView={{
               opacity: 1,
               y: 0,
             }}
+
             viewport={{
               once: true,
             }}
@@ -773,13 +869,16 @@ export default function App() {
                 06 / EDUCATION
               </span>
 
+
               <h2>
                 {education.degree}
               </h2>
 
+
               <h3>
                 {education.field}
               </h3>
+
 
               <p>
                 {education.institution}
@@ -793,9 +892,10 @@ export default function App() {
 
         </section>
 
-        {/* =====================================================
+
+        {/* ======================================================
             CONTACT
-            ===================================================== */}
+            ====================================================== */}
 
         <section
           id="contact"
@@ -808,9 +908,11 @@ export default function App() {
               07 / CONTACT
             </span>
 
+
             <h2>
               Have an idea worth building?
             </h2>
+
 
             <p>
               I'm open to software development,
@@ -818,6 +920,7 @@ export default function App() {
               collaborations and interesting
               technical projects.
             </p>
+
 
             <div className="contact-actions">
 
@@ -831,6 +934,7 @@ export default function App() {
                 <Mail size={18} />
 
               </a>
+
 
               <a
                 href={profile.resume}
@@ -846,6 +950,7 @@ export default function App() {
 
             </div>
 
+
             <div className="contact-details">
 
               <span>
@@ -855,6 +960,7 @@ export default function App() {
                 {profile.email}
 
               </span>
+
 
               <span>
 
@@ -872,9 +978,10 @@ export default function App() {
 
       </main>
 
-      {/* =======================================================
+
+      {/* ========================================================
           FOOTER
-          ======================================================= */}
+          ======================================================== */}
 
       <footer className="footer">
 
@@ -891,6 +998,7 @@ export default function App() {
 
         </div>
 
+
         <div className="footer-links">
 
           <a
@@ -899,8 +1007,11 @@ export default function App() {
             rel="noopener noreferrer"
             aria-label="GitHub"
           >
+
             <Github size={17} />
+
           </a>
+
 
           <a
             href={profile.linkedin}
@@ -908,17 +1019,23 @@ export default function App() {
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
+
             <Linkedin size={17} />
+
           </a>
+
 
           <a
             href={`mailto:${profile.email}`}
             aria-label="Email"
           >
+
             <Mail size={17} />
+
           </a>
 
         </div>
+
 
         <span className="copyright">
 
@@ -931,5 +1048,6 @@ export default function App() {
       </footer>
 
     </div>
+
   );
 }
