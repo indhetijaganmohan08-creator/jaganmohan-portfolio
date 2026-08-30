@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { profile } from "../data/portfolioData";
+import ShareButton from "./ShareButton";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,6 +66,7 @@ export default function Navbar() {
             Resume
             <ArrowUpRight size={15} />
           </a>
+          <ShareButton />
         </nav>
 
         {/* MOBILE MENU BUTTON */}
