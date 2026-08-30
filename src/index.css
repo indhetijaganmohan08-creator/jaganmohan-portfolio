@@ -3308,3 +3308,52 @@ body {
 .navbar-share-button svg {
   flex-shrink: 0;
 }
+/* =========================================================
+   PROJECT CARD MOBILE FIX
+   ========================================================= */
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-view {
+  position: static !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 28px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* Make sure the technology tags have their own space */
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .project-card {
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 32px;
+  }
+
+  .project-tech {
+    margin-top: 24px;
+    gap: 10px;
+  }
+
+  .project-view {
+    position: static !important;
+    margin-top: 28px;
+    width: fit-content;
+  }
+}
