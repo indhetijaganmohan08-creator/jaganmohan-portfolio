@@ -168,9 +168,11 @@ export const projects = [
     ],
 
     images: [
-      `${BASE_URL}projects/hot-topic-trends-1.jpg`,
-      `${BASE_URL}projects/hot-topic-trends-2.jpg`,
-      `${BASE_URL}projects/hot-topic-trends-showcase.jpg`,
+      `${BASE_URL}projects/hot-topic-trends/hot-topic-trends-showcase.png`,
+      `${BASE_URL}projects/hot-topic-trends/hot-topic-trends-1.png`,
+      `${BASE_URL}projects/hot-topic-trends/hot-topic-trends-2.png`,
+      `${BASE_URL}projects/hot-topic-trends/hot-topic-trends-3.png`,
+      `${BASE_URL}projects/hot-topic-trends/hot-topic-trends-4.png`,
     ],
 
     features: [
@@ -205,9 +207,11 @@ export const projects = [
     ],
 
     images: [
-      `${BASE_URL}projects/medbuddy-1.jpg`,
-      `${BASE_URL}projects/medbuddy-2.jpg`,
-      `${BASE_URL}projects/medbuddy-showcase.jpg`,
+      `${BASE_URL}projects/medbuddy/medbuddy-showcase.png`,
+      `${BASE_URL}projects/medbuddy/medbuddy-1.png`,
+      `${BASE_URL}projects/medbuddy/medbuddy-2.png`,
+      `${BASE_URL}projects/medbuddy/medbuddy-3.png`,
+      `${BASE_URL}projects/medbuddy/medbuddy-4.png`,
     ],
 
     features: [
