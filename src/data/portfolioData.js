@@ -21,7 +21,7 @@ export const profile = {
   linkedin:
     "https://www.linkedin.com/in/jaganmohanindheti/",
 
-  resume: "/resume.pdf",
+  resume: `${BASE_URL}resume.pdf`,
 };
 
 
